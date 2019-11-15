@@ -24,26 +24,28 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center">
-        <TextView
+        <ImageView
             android:id="@+id/media_button"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="사진"/>
+            android:src="@drawable/ic_chat_add_image"/>
         <EditText
             android:id="@+id/chat_edit_text"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="8" />
-        <TextView
+            android:layout_weight="8"
+            android:background="#EAEAEA"/>
+        <ImageView
             android:id="@+id/chat_send_button"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="전송"/>
+            android:src="@drawable/ic_chat_send"
+            />
 
     </LinearLayout>
 

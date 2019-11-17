@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <CheckBoxPreference
+        android:key="chat_alarm"
+        android:title="알림여부"
+        android:defaultValue="true"
+        android:summary="체크하면 알림설정"/>
+    <CheckBoxPreference
+        android:key="chat_pre_view"
+        android:title="미리보기 설정"
+        android:defaultValue="true"
+        android:summary="체크하면 미리보기 설정"/>
+</PreferenceScreen>

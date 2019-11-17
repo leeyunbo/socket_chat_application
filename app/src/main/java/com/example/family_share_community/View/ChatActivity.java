@@ -1,5 +1,7 @@
 package com.example.family_share_community.View;
 
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,13 +18,24 @@ import android.view.Menu;
 
 import com.example.family_share_community.R;
 
+import Model.ChatDatabaseManager;
+
 public class ChatActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    ChatDatabaseManager helper;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        helper = new ChatDatabaseManager(this);
+        try {
+            db = helper.getWritableDatabase();
+        } catch (SQLException ex) { //만약 데이터베이스에 접근을 하지 못한다면, 읽기 전용 모드로 접근한다.
+            db = helper.getReadableDatabase();
+        }
+        /*
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -33,6 +46,7 @@ public class ChatActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        */
     }
 
     @Override
@@ -44,7 +58,6 @@ public class ChatActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -69,5 +82,10 @@ public class ChatActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void dbUpdate(String message, String name) {
+
+        db.execSQL("INSERT INTO chat_message VALUES (1,'"+ message + "','"+name+"');"); //CREATE TABLE chat_message (chat_id INT, message TEXT, name TEXT)
     }
 }

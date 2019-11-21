@@ -9,17 +9,9 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_chat"
+        layout="@layout/content_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent" /> <!--Main Content -->
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_chat"
-        app:menu="@menu/activity_chat_drawer" /> <!--Drawer-->
 
 </android.support.v4.widget.DrawerLayout>

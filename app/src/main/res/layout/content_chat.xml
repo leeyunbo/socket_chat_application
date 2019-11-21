@@ -7,14 +7,20 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".View.ChatActivity"
-    tools:showIn="@layout/app_bar_chat"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
+    <ScrollView
+        android:id="@+id/chat_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9">
-    </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/chat_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_marginLeft="10dp"
@@ -44,9 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_chat_send"
-            />
-
+            android:src="@drawable/ic_chat_send"/>
     </LinearLayout>
 
 </LinearLayout>

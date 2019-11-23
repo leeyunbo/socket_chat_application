@@ -22,6 +22,13 @@ public class ChatMainActivity extends AppCompatActivity {
     boolean isConnect = true;
     ProgressDialog pro;
 
+    private static final ChatMainActivity instance = new ChatMainActivity();
+    private ChatMainActivity() {};
+
+    public static ChatMainActivity getInstance() {
+        return instance;
+    } //singleton pattern
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +58,10 @@ public class ChatMainActivity extends AppCompatActivity {
                }
 
         });
+
+    }
+
+    public void MessageStart() {
 
     }
 }

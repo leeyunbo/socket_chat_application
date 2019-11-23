@@ -1,5 +1,6 @@
 package com.example.family_share_community.View;
 
+import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class ChatActivity extends AppCompatActivity {
     ChatDatabaseManager helper;
     SQLiteDatabase db;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,6 @@ public class ChatActivity extends AppCompatActivity {
 
 
     public void dbUpdate(String message, String name) {
-
         db.execSQL("INSERT INTO chat_message VALUES (1,'"+ message + "','"+name+"');"); //CREATE TABLE chat_message (chat_id INT, message TEXT, name TEXT)
     }
 }

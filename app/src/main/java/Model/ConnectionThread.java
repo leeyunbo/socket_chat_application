@@ -16,11 +16,14 @@ public class ConnectionThread extends Thread {
     @Override
     public void run() {
         try {
-            final Socket socket = new Socket("192.168.219.101",40000);
+            final Socket socket = new Socket("192.168.219.101", 40000);
             member_socket = socket;
             OutputStream os = socket.getOutputStream();
             DataOutputStream dos = new DataOutputStream(os);
             dos.writeUTF(user_nickname);
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+}

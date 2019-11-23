@@ -1,5 +1,8 @@
 package Model;
 
+import com.example.family_share_community.View.ChatActivity;
+import com.example.family_share_community.View.ChatMainActivity;
+
 import java.io.DataOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -21,7 +24,7 @@ public class ConnectionThread extends Thread {
             OutputStream os = socket.getOutputStream();
             DataOutputStream dos = new DataOutputStream(os);
             dos.writeUTF(user_nickname);
-
+            ChatMainActivity.getInstance().MessageStart(member_socket);
         } catch (Exception e) {
             e.printStackTrace();
         }

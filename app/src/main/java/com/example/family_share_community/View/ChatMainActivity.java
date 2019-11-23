@@ -11,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import com.example.family_share_community.R;
 
+import java.net.Socket;
+
 import Model.ConnectionThread;
+import Model.MessageThread;
 
 public class ChatMainActivity extends AppCompatActivity {
 
@@ -21,7 +24,7 @@ public class ChatMainActivity extends AppCompatActivity {
     private ScrollView scroll;
     boolean isConnect = true;
     ProgressDialog pro;
-
+    boolean isRunning = false;
     private static final ChatMainActivity instance = new ChatMainActivity();
     private ChatMainActivity() {};
 
@@ -61,7 +64,11 @@ public class ChatMainActivity extends AppCompatActivity {
 
     }
 
-    public void MessageStart() {
-
+    public void MessageStart(Socket member_socket) {
+        pro.dismiss();
+        isConnect = true;
+        isRunning = true;
+        MessageThread thread = new MessageThread(member_socket);
+        thread.start();
     }
 }

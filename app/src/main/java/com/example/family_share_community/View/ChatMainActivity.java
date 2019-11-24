@@ -2,6 +2,7 @@ package com.example.family_share_community.View;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,13 +16,12 @@ import java.net.Socket;
 
 import Model.ConnectionThread;
 import Model.MessageThread;
+import Model.SocketHandler;
 
 public class ChatMainActivity extends AppCompatActivity {
 
     private Button connect_button;
     private EditText nickname_editText;
-    private LinearLayout container;
-    private ScrollView scroll;
     boolean isConnect = true;
     ProgressDialog pro;
     boolean isRunning = false;
@@ -40,8 +40,7 @@ public class ChatMainActivity extends AppCompatActivity {
 
         connect_button = findViewById(R.id.connect_button);
         nickname_editText = findViewById(R.id.nickname_editText);
-        container = findViewById(R.id.chat_container);
-        scroll = findViewById(R.id.chat_scroll);
+
 
         connect_button.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -49,6 +48,7 @@ public class ChatMainActivity extends AppCompatActivity {
                    String nickName = nickname_editText.getText().toString();
                    if (!nickName.isEmpty()) {
                        pro = ProgressDialog.show(ChatMainActivity.this, null, "접속중..");
+                       SocketHandler.setNickName(nickName);
                        ConnectionThread thread = new ConnectionThread(nickName);
                        thread.run();
 
@@ -67,9 +67,8 @@ public class ChatMainActivity extends AppCompatActivity {
 
     public void MessageStart(Socket member_socket) {
         pro.dismiss();
-        isConnect = true;
-        isRunning = true;
-        MessageThread thread = new MessageThread(member_socket);
-        thread.start();
+        SocketHandler.setSocket(member_socket); //소켓 정적 변수에 등록
+        Intent intent = new Intent(this,ChatActivity.class);
+        startActivity(intent);
     }
 }

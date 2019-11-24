@@ -2,6 +2,7 @@ package Model;
 
 import android.os.Message;
 
+import com.example.family_share_community.View.ChatActivity;
 import com.example.family_share_community.View.ChatMainActivity;
 
 import java.io.DataInputStream;
@@ -12,6 +13,10 @@ public class MessageThread extends Thread {
     Socket socket;
     DataInputStream dis;
     boolean isRunning = false;
+
+    public void FinishCallbackMethod() {
+        this.isRunning = false;
+    }
 
     public MessageThread(Socket socket) {
         try {
@@ -28,8 +33,11 @@ public class MessageThread extends Thread {
         try {
             while (isRunning) {
                 final String msg = dis.readUTF();
-                ChatMainActivity.getInstance(); // ChatActivity로 넘어가야함
+                // 화면에 출력
+                ChatActivity.getInstance().changeMessageView(msg);
             }
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 }

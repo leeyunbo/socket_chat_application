@@ -15,6 +15,8 @@ public class SocketHandler {
         SocketHandler.socket = socket;
     }
 
+    public static synchronized void deleteSocket() { SocketHandler.socket = null; }
+
     public static String getNickName() {
         return nickName;
     }
@@ -22,4 +24,6 @@ public class SocketHandler {
     public static void setNickName(String nickName) {
         SocketHandler.nickName = nickName;
     }
+
+    public static void deleteNickName() { SocketHandler.nickName = null; }
 }

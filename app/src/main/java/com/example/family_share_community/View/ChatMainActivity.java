@@ -70,5 +70,6 @@ public class ChatMainActivity extends AppCompatActivity {
         SocketHandler.setSocket(member_socket); //소켓 정적 변수에 등록
         Intent intent = new Intent(this,ChatActivity.class);
         startActivity(intent);
+        this.onDestroy();
     }
 }

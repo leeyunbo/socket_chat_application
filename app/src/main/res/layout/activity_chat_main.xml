@@ -12,29 +12,57 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center">
-    <ImageView
-        android:src="@drawable/ic_chat_image"
+        android:gravity="center"
+        android:layout_margin="15dp">
+    <TextView
+        android:layout_marginTop="25dp"
+        android:textStyle="bold"
+        android:textSize="50dp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="#1266FF"
+        android:text="Open Chat"
         android:layout_width="match_parent"
-        android:layout_height="260dp" />
+        android:layout_height="120dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center">
-    <EditText
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:id="@+id/nickname_editText"
-        android:hint="닉네임을 입력해주세요."
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="오픈채팅방 접속하기"
+            android:textColor="#1266FF"
+            android:textSize="17dp"/>
+        <EditText
+            android:background="@drawable/connect_button_design"
+            android:ems="10"
+            android:textSize="15dp"
+            android:textColorHint="#00000f"
+            android:singleLine="true"
+            android:padding="10dp"
+            android:textColor="#00000f"
+            android:textCursorDrawable="@null"
+            android:inputType="textPersonName"
+            android:id="@+id/nickname_editText"
+            android:hint="닉네임을 입력해주세요."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"/>
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/connect_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="접속"/>
+        android:text="접속"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:background="#1266FF"
+        android:textSize="20sp"/>
     </LinearLayout>
 
 

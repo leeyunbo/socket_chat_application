@@ -28,7 +28,7 @@ public class MessageThread extends Thread {
         try {
             while (isRunning) {
                 final String msg = dis.readUTF();
-                ChatMainActivity.getInstance()
+                ChatMainActivity.getInstance(); // ChatActivity로 넘어가야함
             }
         }
     }

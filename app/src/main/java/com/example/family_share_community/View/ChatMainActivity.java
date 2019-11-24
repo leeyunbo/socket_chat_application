@@ -25,6 +25,7 @@ public class ChatMainActivity extends AppCompatActivity {
     boolean isConnect = true;
     ProgressDialog pro;
     boolean isRunning = false;
+
     private static final ChatMainActivity instance = new ChatMainActivity();
     private ChatMainActivity() {};
 

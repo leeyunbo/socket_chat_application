@@ -1,5 +1,7 @@
 package Model;
 
+import android.os.Handler;
+
 import com.example.family_share_community.View.ChatActivity;
 import com.example.family_share_community.View.ChatMainActivity;
 
@@ -8,23 +10,24 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class ConnectionThread extends Thread {
-    Socket member_socket;
-    String user_nickname;
+    private String user_nickname;
+    private Handler handler;
+    private final int CONNECT_SERVER = 0;
 
-    public ConnectionThread(String user_nickname) {
+    public ConnectionThread(String user_nickname, Handler handler) {
         this.user_nickname = user_nickname;
+        this.handler = handler;
     }
-
 
     @Override
     public void run() {
         try {
-            final Socket socket = new Socket("192.168.219.103", 40000);
-            member_socket = socket;
+            final Socket socket = new Socket("192.168.17.1", 8005);
+            SocketHandler.setSocket(socket);
             OutputStream os = socket.getOutputStream();
             DataOutputStream dos = new DataOutputStream(os);
             dos.writeUTF(user_nickname);
-            ChatMainActivity.getInstance().MessageStart(member_socket);
+            handler.sendEmptyMessage(CONNECT_SERVER);
         } catch (Exception e) {
             e.printStackTrace();
         }

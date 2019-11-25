@@ -3,6 +3,8 @@ package com.example.family_share_community.View;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,17 +24,17 @@ public class ChatMainActivity extends AppCompatActivity {
 
     private Button connect_button;
     private EditText nickname_editText;
-    boolean isConnect = true;
-    ProgressDialog pro;
-    boolean isRunning = false;
+    private final int CONNECT_SERVER = 0;
+    private Handler handler;
 
+    /*
     private static final ChatMainActivity instance = new ChatMainActivity();
     private ChatMainActivity() {};
 
     public static ChatMainActivity getInstance() {
         return instance;
     } //singleton pattern
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,18 +43,25 @@ public class ChatMainActivity extends AppCompatActivity {
         connect_button = findViewById(R.id.connect_button);
         nickname_editText = findViewById(R.id.nickname_editText);
 
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what == CONNECT_SERVER) {
+                    MessageStart(SocketHandler.getSocket());
+                }
+            }
+        };
 
         connect_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                    String nickName = nickname_editText.getText().toString();
                    if (!nickName.isEmpty()) {
-                       pro = ProgressDialog.show(ChatMainActivity.this, null, "접속중..");
                        SocketHandler.setNickName(nickName);
-                       ConnectionThread thread = new ConnectionThread(nickName);
+                       ConnectionThread thread = new ConnectionThread(nickName,handler);
                        thread.run();
-
                    }
+
                    else {
                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatMainActivity.this);
                        builder.setMessage("닉네임을 입력해주세요.");
@@ -66,8 +75,6 @@ public class ChatMainActivity extends AppCompatActivity {
     }
 
     public void MessageStart(Socket member_socket) {
-        pro.dismiss();
-        SocketHandler.setSocket(member_socket); //소켓 정적 변수에 등록
         Intent intent = new Intent(this,ChatActivity.class);
         startActivity(intent);
         this.onDestroy();

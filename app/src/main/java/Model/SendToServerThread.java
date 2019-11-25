@@ -1,6 +1,7 @@
 package Model;
 
 import android.icu.util.Output;
+import android.os.Handler;
 import android.os.StrictMode;
 
 import com.example.family_share_community.View.ChatActivity;
@@ -15,11 +16,14 @@ public class SendToServerThread extends Thread {
     Socket socket;
     String msg;
     DataOutputStream dos;
+    private final int SEND_MESSAGE = 0;
+    private Handler handler;
 
-    public SendToServerThread(Socket socket, String msg) {
+    public SendToServerThread(Socket socket, String msg,Handler handler) {
         try {
             this.socket = socket;
             this.msg = msg;
+            this.handler = handler;
             OutputStream os = socket.getOutputStream();
             dos = new DataOutputStream(os);
         } catch (IOException e) {
@@ -31,8 +35,7 @@ public class SendToServerThread extends Thread {
     public void run() {
         try {
             dos.writeUTF(msg);
-            ChatActivity.getInstance().setDefaultEditText();
-
+            handler.sendEmptyMessage(SEND_MESSAGE);
         } catch(Exception e) {
             e.printStackTrace();
         }

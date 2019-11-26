@@ -11,10 +11,10 @@ import java.io.DataInputStream;
 import java.io.InputStream;
 import java.net.Socket;
 
-public class MessageThread extends Thread {
+public class ReceiveMessage {
     Socket socket;
     DataInputStream dis;
-    boolean isRunning = false;
+    boolean isRunning = true;
     private Handler handler;
     private final int RECEIVE_MESSAGE = 1;
 
@@ -22,20 +22,12 @@ public class MessageThread extends Thread {
         this.isRunning = false;
     }
 
-    public MessageThread(Socket socket, Handler handler) {
+    public ReceiveMessage(Socket socket, Handler handler) {
         try {
             this.handler = handler;
             this.socket = socket;
             InputStream is = socket.getInputStream();
             dis = new DataInputStream(is);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void run() {
-        try {
             while (isRunning) {
                 final String chat_message = dis.readUTF();
                 // 화면에 출력
@@ -45,8 +37,14 @@ public class MessageThread extends Thread {
                 msg.setData(data);
                 handler.sendEmptyMessage(RECEIVE_MESSAGE);
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
+
+
+
+
 }

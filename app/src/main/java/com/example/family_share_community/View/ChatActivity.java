@@ -1,6 +1,5 @@
 package com.example.family_share_community.View;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -10,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,9 +19,8 @@ import com.example.family_share_community.R;
 
 import java.net.Socket;
 
-import Model.ConnectionThread;
-import Model.MessageThread;
-import Model.SendToServerThread;
+import Model.ReceiveMessage;
+import Model.SendToServer;
 import Model.SocketHandler;
 
 public class ChatActivity extends AppCompatActivity {
@@ -32,11 +29,12 @@ public class ChatActivity extends AppCompatActivity {
     private Socket socket;
     private String nickName;
     private EditText chat_edit;
-    private MessageThread thread;
     private Handler handler;
     private ImageView send_button;
+    private MessageThread messageThread;
     private final int SEND_MESSAGE = 0;
     private final int RECEIVE_MESSAGE = 1;
+    private final int DESTROY_ACTIVITY = 2;
 
     private static final ChatActivity instance = new ChatActivity();
     private ChatActivity() {};
@@ -67,14 +65,14 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
 
-        thread = new MessageThread(SocketHandler.getSocket(),handler);
-        thread.start();
+        messageThread = new MessageThread();
+        messageThread.start();
 
         send_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String msg = chat_edit.getText().toString();
-                SendToServerThread thread = new SendToServerThread(socket, msg,handler);
-                thread.start();
+                SendToServerThread sendToServerThread = new SendToServerThread(msg);
+                sendToServerThread.run();
             }
 
         });
@@ -86,9 +84,10 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         try {
             socket.close();
-            thread.FinishCallbackMethod();
+            //thread.FinishCallbackMethod();
             SocketHandler.deleteNickName();
             SocketHandler.deleteSocket();
+            messageThread.getHandler().sendEmptyMessage(DESTROY_ACTIVITY);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -109,6 +108,58 @@ public class ChatActivity extends AppCompatActivity {
 
     public void setDefaultEditText() {
         chat_edit.setText("");
+    }
+
+    class MessageThread extends Thread {
+        Handler handler;
+        ReceiveMessage receiveMessage;
+
+        public MessageThread() {
+            this.handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    if(msg.what == DESTROY_ACTIVITY) {
+                        receiveMessage.FinishCallbackMethod();
+                    }
+                }
+            };
+        }
+
+        public Handler getHandler() {
+            return handler;
+        }
+
+        @Override
+        public void run() {
+            try {
+                receiveMessage = new ReceiveMessage(socket,handler);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    class SendToServerThread extends Thread {
+        String msg;
+        SendToServer sendToServer;
+
+        public Handler getHandler() {
+            return handler;
+        }
+
+        public SendToServerThread(String msg) {
+            this.msg = msg;
+        }
+
+        @Override
+        public void run() {
+            try{
+                sendToServer = new SendToServer(socket,msg,handler);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

@@ -1,7 +1,6 @@
 package com.example.family_share_community.View;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -10,14 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+
 import com.example.family_share_community.R;
 
 import java.net.Socket;
 
-import Model.ConnectionThread;
-import Model.MessageThread;
+import Model.ConnectionServer;
 import Model.SocketHandler;
 
 public class ChatMainActivity extends AppCompatActivity {
@@ -27,14 +24,6 @@ public class ChatMainActivity extends AppCompatActivity {
     private final int CONNECT_SERVER = 0;
     private Handler handler;
 
-    /*
-    private static final ChatMainActivity instance = new ChatMainActivity();
-    private ChatMainActivity() {};
-
-    public static ChatMainActivity getInstance() {
-        return instance;
-    } //singleton pattern
-*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +44,10 @@ public class ChatMainActivity extends AppCompatActivity {
         connect_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                   String nickName = nickname_editText.getText().toString();
-                   if (!nickName.isEmpty()) {
-                       SocketHandler.setNickName(nickName);
-                       ConnectionThread thread = new ConnectionThread(nickName,handler);
+                   SocketHandler.setNickName(nickname_editText.getText().toString());
+                   if (!SocketHandler.getNickName().isEmpty()) {
+                       SocketHandler.setNickName(SocketHandler.getNickName());
+                       ConnectionThread thread = new ConnectionThread();
                        thread.run();
                    }
 
@@ -78,5 +67,12 @@ public class ChatMainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,ChatActivity.class);
         startActivity(intent);
         this.onDestroy();
+    }
+    class ConnectionThread extends Thread {
+        ConnectionServer connectionServer;
+        @Override
+        public void run() {
+            connectionServer = new ConnectionServer(SocketHandler.getNickName(),handler);
+        }
     }
 }

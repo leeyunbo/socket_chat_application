@@ -9,18 +9,15 @@ import java.io.DataOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class ConnectionThread extends Thread {
+public class ConnectionServer {
     private String user_nickname;
     private Handler handler;
     private final int CONNECT_SERVER = 0;
 
-    public ConnectionThread(String user_nickname, Handler handler) {
+    public ConnectionServer(String user_nickname, Handler handler) {
         this.user_nickname = user_nickname;
         this.handler = handler;
-    }
 
-    @Override
-    public void run() {
         try {
             final Socket socket = new Socket("192.168.17.1", 8005);
             SocketHandler.setSocket(socket);
@@ -31,5 +28,7 @@ public class ConnectionThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
+
 }

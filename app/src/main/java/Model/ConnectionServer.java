@@ -1,6 +1,7 @@
 package Model;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.example.family_share_community.View.ChatActivity;
 import com.example.family_share_community.View.ChatMainActivity;
@@ -19,12 +20,13 @@ public class ConnectionServer {
         this.handler = handler;
 
         try {
-            final Socket socket = new Socket("192.168.17.1", 8005);
+            final Socket socket = new Socket("192.168.219.100", 35000);
             SocketHandler.setSocket(socket);
             OutputStream os = socket.getOutputStream();
             DataOutputStream dos = new DataOutputStream(os);
             dos.writeUTF(user_nickname);
             handler.sendEmptyMessage(CONNECT_SERVER);
+            Log.i("ConnectionServer","Connect Success");
         } catch (Exception e) {
             e.printStackTrace();
         }

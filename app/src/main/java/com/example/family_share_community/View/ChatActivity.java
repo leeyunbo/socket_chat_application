@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -36,18 +37,11 @@ public class ChatActivity extends AppCompatActivity {
     private final int RECEIVE_MESSAGE = 1;
     private final int DESTROY_ACTIVITY = 2;
 
-    private static final ChatActivity instance = new ChatActivity();
-    private ChatActivity() {};
-
-    public static ChatActivity getInstance() {
-        return instance;
-    } //singleton pattern
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        socket = SocketHandler.getSocket();
         container = findViewById(R.id.chat_container);
         scroll = findViewById(R.id.chat_scroll);
         chat_edit = findViewById(R.id.chat_edit_text);
@@ -72,7 +66,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String msg = chat_edit.getText().toString();
                 SendToServerThread sendToServerThread = new SendToServerThread(msg);
-                sendToServerThread.run();
+                sendToServerThread.start();
             }
 
         });
@@ -143,10 +137,6 @@ public class ChatActivity extends AppCompatActivity {
     class SendToServerThread extends Thread {
         String msg;
         SendToServer sendToServer;
-
-        public Handler getHandler() {
-            return handler;
-        }
 
         public SendToServerThread(String msg) {
             this.msg = msg;

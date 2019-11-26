@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +37,8 @@ public class ChatMainActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 if(msg.what == CONNECT_SERVER) {
-                    MessageStart(SocketHandler.getSocket());
+                    Log.i("CONNECT_SERVER_MESSAGE","Connect Success Next Activity");
+                    MessageStart();
                 }
             }
         };
@@ -48,7 +50,7 @@ public class ChatMainActivity extends AppCompatActivity {
                    if (!SocketHandler.getNickName().isEmpty()) {
                        SocketHandler.setNickName(SocketHandler.getNickName());
                        ConnectionThread thread = new ConnectionThread();
-                       thread.run();
+                       thread.start();
                    }
 
                    else {
@@ -63,10 +65,9 @@ public class ChatMainActivity extends AppCompatActivity {
 
     }
 
-    public void MessageStart(Socket member_socket) {
-        Intent intent = new Intent(this,ChatActivity.class);
+    public void MessageStart() {
+        Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
         startActivity(intent);
-        this.onDestroy();
     }
     class ConnectionThread extends Thread {
         ConnectionServer connectionServer;

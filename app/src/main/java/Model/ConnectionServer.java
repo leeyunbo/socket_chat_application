@@ -20,7 +20,7 @@ public class ConnectionServer {
         this.handler = handler;
 
         try {
-            final Socket socket = new Socket("192.168.219.100", 35000);
+            final Socket socket = new Socket("192.168.219.102", 35000);
             SocketHandler.setSocket(socket);
             OutputStream os = socket.getOutputStream();
             DataOutputStream dos = new DataOutputStream(os);

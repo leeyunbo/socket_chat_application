@@ -22,8 +22,6 @@ public class ChatMainActivity extends AppCompatActivity {
 
     private Button connect_button;
     private EditText nickname_editText;
-    private final int CONNECT_SERVER = 0;
-    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +31,14 @@ public class ChatMainActivity extends AppCompatActivity {
         connect_button = findViewById(R.id.connect_button);
         nickname_editText = findViewById(R.id.nickname_editText);
 
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if(msg.what == CONNECT_SERVER) {
-                    Log.i("CONNECT_SERVER_MESSAGE","Connect Success Next Activity");
-                    MessageStart();
-                }
-            }
-        };
 
         connect_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                    SocketHandler.setNickName(nickname_editText.getText().toString());
                    if (!SocketHandler.getNickName().isEmpty()) {
-                       SocketHandler.setNickName(SocketHandler.getNickName());
-                       ConnectionThread thread = new ConnectionThread();
-                       thread.start();
+                       Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
+                       startActivity(intent);
                    }
 
                    else {
@@ -65,15 +53,6 @@ public class ChatMainActivity extends AppCompatActivity {
 
     }
 
-    public void MessageStart() {
-        Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
-        startActivity(intent);
-    }
-    class ConnectionThread extends Thread {
-        ConnectionServer connectionServer;
-        @Override
-        public void run() {
-            connectionServer = new ConnectionServer(SocketHandler.getNickName(),handler);
-        }
-    }
+
+
 }

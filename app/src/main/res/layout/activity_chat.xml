@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".View.ChatActivity"
     android:orientation="vertical">
 
@@ -31,6 +30,7 @@
         android:gravity="center">
         <EditText
             android:padding="5dp"
+            android:textSize="15dp"
             android:hint="메시지 입력"
             android:id="@+id/chat_edit_text"
             android:layout_width="0dp"
@@ -43,6 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="5dp"
             android:src="@drawable/ic_chat_send"/>
     </LinearLayout>
 

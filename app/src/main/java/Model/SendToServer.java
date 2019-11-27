@@ -19,9 +19,9 @@ public class SendToServer {
     private final int SEND_MESSAGE = 0;
     private Handler handler;
 
-    public SendToServer(Socket socket, String msg, Handler handler) {
+    public SendToServer(String msg, Handler handler) {
         try {
-            this.socket = socket;
+            this.socket = SocketHandler.getSocket();
             this.msg = msg;
             this.handler = handler;
             OutputStream os = socket.getOutputStream();

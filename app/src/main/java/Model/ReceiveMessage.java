@@ -22,10 +22,10 @@ public class ReceiveMessage {
         this.isRunning = false;
     }
 
-    public ReceiveMessage(Socket socket, Handler handler) {
+    public ReceiveMessage( Handler handler) {
         try {
             this.handler = handler;
-            this.socket = socket;
+            this.socket = SocketHandler.getSocket();
             InputStream is = socket.getInputStream();
             dis = new DataInputStream(is);
             while (isRunning) {

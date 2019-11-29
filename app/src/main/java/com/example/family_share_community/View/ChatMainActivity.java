@@ -17,6 +17,7 @@ import java.net.Socket;
 
 import Model.ConnectionServer;
 import Model.SocketHandler;
+import Services.MusicService;
 
 public class ChatMainActivity extends AppCompatActivity {
 
@@ -30,6 +31,7 @@ public class ChatMainActivity extends AppCompatActivity {
 
         connect_button = findViewById(R.id.connect_button);
         nickname_editText = findViewById(R.id.nickname_editText);
+        startService(new Intent(this, MusicService.class));
 
 
         connect_button.setOnClickListener(new Button.OnClickListener() {
@@ -37,6 +39,7 @@ public class ChatMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                    SocketHandler.setNickName(nickname_editText.getText().toString());
                    if (!SocketHandler.getNickName().isEmpty()) {
+                       stopService(new Intent(getApplicationContext(),MusicService.class));
                        Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
                        startActivity(intent);
                    }

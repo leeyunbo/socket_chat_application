@@ -2,7 +2,6 @@ package Services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.widget.Toast;
@@ -18,7 +17,7 @@ public class MusicService extends Service {
 
     @Override
     public void onCreate() {
-        player = MediaPlayer.create(this, R.raw.Havana);
+        player = MediaPlayer.create(this, R.raw.havana);
         player.setLooping(false);
     }
 
@@ -33,6 +32,7 @@ public class MusicService extends Service {
     @Override
     public void onDestroy() {
         Toast.makeText(this, "Music Service 중지", Toast.LENGTH_LONG).show();
+        player.stop();
         super.onDestroy();
     }
 

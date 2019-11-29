@@ -23,6 +23,7 @@ public class ChatMainActivity extends AppCompatActivity {
 
     private Button connect_button;
     private EditText nickname_editText;
+    private Intent serviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,8 @@ public class ChatMainActivity extends AppCompatActivity {
 
         connect_button = findViewById(R.id.connect_button);
         nickname_editText = findViewById(R.id.nickname_editText);
-        startService(new Intent(this, MusicService.class));
+        serviceIntent = new Intent(this, MusicService.class);
+        startService(serviceIntent);
 
 
         connect_button.setOnClickListener(new Button.OnClickListener() {
@@ -39,7 +41,7 @@ public class ChatMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                    SocketHandler.setNickName(nickname_editText.getText().toString());
                    if (!SocketHandler.getNickName().isEmpty()) {
-                       stopService(new Intent(getApplicationContext(),MusicService.class));
+                       stopService(serviceIntent);
                        Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
                        startActivity(intent);
                    }

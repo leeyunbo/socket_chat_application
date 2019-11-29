@@ -204,7 +204,7 @@ public class ChatActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                socket = new Socket("192.168.219.102", 32500);
+                socket = new Socket("192.168.219.100", 32500);
                 OutputStream os = socket.getOutputStream();
                 DataOutputStream dos = new DataOutputStream(os);
                 dos.writeUTF(SocketHandler.getNickName());

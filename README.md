@@ -22,3 +22,7 @@ Android Studio 툴과 Eclipse를 이용하여 개발하였으며, Java를 사용
     1-3. 다른 사용자가 메시지를 전송하였다면 해당 메시지를 서버에게 수신받은 후 사용자에게 표시
     
 ```
+
+### 애플리케이션 화면 
+
+<img src = "https://user-images.githubusercontent.com/44944031/87564781-c3a9d680-c6fb-11ea-957a-3aae460a100b.png" width="500px">
